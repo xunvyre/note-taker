@@ -5,6 +5,10 @@ const { notes } = require('./db/notes');
 const fs = require('fs');
 const path = require('path');
 
+//routes
+const apiRoutes = require('./routes/apiRoutes');
+const htmlRoutes = require('./routes/htmlRoutes');
+
 //port
 const PORT = process.env.PORT || 3001;
 
@@ -12,73 +16,8 @@ const PORT = process.env.PORT || 3001;
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(express.static('public'));
-
-//functions to be moved later
-function createNewNote(body, notesArr)
-{
-    const note = body;
-    notesArr.push(note);
-    fs.writeFileSync
-    (
-        path.join(__dirname, './db/notes.json'),
-        JSON.stringify({ notes: notesArr }, null, 2)
-    );
-    return note;
-};
-
-//api route(s)
-app.get('/api/notes', (req, res) =>
-{
-    res.json(notes);
-});
-
-//GET routes
-app.get('/', (req, res) =>
-{
-    res.sendFile(path.join(__dirname, './public/index.html'));
-});
-app.get('/notes', (req, res) =>
-{
-    res.sendFile(path.join(__dirname, './public/notes.html'));
-});
-//send any weird request back to main notes page, NOT index.html
-app.get('*', (req, res) =>
-{
-    res.sendFile(path.join(__dirname, './public/notes.html'));
-});
-
-//POST route(s)
-app.post('/api/notes', (req, res) =>
-{
-    //use epoch ms to assign a unique id
-    const d = new Date();
-    let noteID = d.getTime();
-    req.body.id = noteID.toString();
-
-    //add to json file
-    const note = createNewNote(req.body, notes);
-
-    res.json(req.body);
-});
-
-//delete by id#
-app.delete('/api/notes/:id', (req, res) =>
-{
-    let noteID = req.params.id;
-    for (let i = 0; i < notes.length; i++)
-    {
-        if(notes[i].id === noteID)
-        {
-            notes.splice(i, 1);
-            fs.writeFileSync
-            (
-                path.join(__dirname, './db/notes.json'),
-                JSON.stringify({ notes: notes }, null, 2)
-            );
-            location.reload(true);
-        }
-    }
-});
+app.use('/api', apiRoutes);
+app.use('/', htmlRoutes);
 
 //confirmation of API
 app.listen(PORT, () =>
