@@ -1,6 +1,7 @@
 Made with Xunvyre's README generator ♡
 # Note Taker with Express.js
 ## Description
+[Welcome to Note Taker! Click here for the browser app.](https://rocky-harbor-45317.herokuapp.com/)
 Designed with a busy schedule in mind, this note taking app allows you to create, save, and delete notes in your browser for convenient reminders.
 ## Table of Contents
 * [Installation](https://github.com/xunvyre/note-taker#installation)
