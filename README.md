@@ -7,9 +7,10 @@ Designed with a busy schedule in mind, this note taking app allows you to create
 * [Future Development](https://github.com/xunvyre/note-taker#future-development)
 * [Credits](https://github.com/xunvyre/note-taker#credits)
 ## Installation
-You will need to download Express.js to install this project locally.
+You will need to use NPM and download Express.js to install this project locally.
 ## Usage
-SCREENSHOTS HERE!!!!!
+![The landing page of the app.](./public/assets/images/starting-screen.jpg)
+![The notes functionality with some example notes.](./public/assets/images/notes.jpg)
 ## Future Development
 In the future I would like to add note reorganization, as well as fixing the location undefined bug for note deletion.
 ## Credits
