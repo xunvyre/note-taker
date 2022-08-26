@@ -56,9 +56,28 @@ app.post('/api/notes', (req, res) =>
     req.body.id = noteID.toString();
 
     //add to json file
-    const animal = createNewNote(req.body, notes);
+    const note = createNewNote(req.body, notes);
 
     res.json(req.body);
+});
+
+//delete by id#
+app.delete('/api/notes/:id', (req, res) =>
+{
+    let noteID = req.params.id;
+    for (let i = 0; i < notes.length; i++)
+    {
+        if(notes[i].id === noteID)
+        {
+            notes.splice(i, 1);
+            fs.writeFileSync
+            (
+                path.join(__dirname, './db/notes.json'),
+                JSON.stringify({ notes: notes }, null, 2)
+            );
+            location.reload(true);
+        }
+    }
 });
 
 //confirmation of API
